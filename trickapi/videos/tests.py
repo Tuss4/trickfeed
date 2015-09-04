@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from rest_framework.test import APITestCase
 from rest_framework import status
 
-from .models import YT, YT_URL
+from .models import YT, YT_URL, Video
 from trickers.models import Tricker
 
 import datetime
@@ -56,6 +56,7 @@ class VideoTests(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION="Token " + self.admin.auth_token.key)
         response = self.client.post(self.video_url, self.video_2_data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.existing_video = Video.objects.get(pk=response.data['id'])
         self.client.credentials()
 
     # Video Creation
@@ -93,3 +94,35 @@ class VideoTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
 
     # Video Detail
+    def test_get_video_detail(self):
+        response = self.client.get(self.get_detail_url(self.video_detail, self.existing_video.pk))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_video_detail_not_found(self):
+        far_out_pk = Video.objects.last().pk + 5000
+        response = self.client.get(self.get_detail_url(self.video_detail, far_out_pk))
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_patch_unauthorized(self):
+        response = self.client.patch(
+            self.get_detail_url(self.video_detail, self.existing_video.pk), {
+                "title": "Tricking Gone Horribly Wrong"
+            })
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_patch_forbidden(self):
+        self.client.credentials(HTTP_AUTHORIZATION="Token " + self.reg.auth_token.key)
+        response = self.client.patch(
+            self.get_detail_url(self.video_detail, self.existing_video.pk), {
+                "title": "Tricking Gone Horribly Wrong"
+            })
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_patch_success(self):
+        self.client.credentials(HTTP_AUTHORIZATION="Token " + self.admin.auth_token.key)
+        response = self.client.patch(
+            self.get_detail_url(self.video_detail, self.existing_video.pk), {
+                "title": "Tricking Gone Horribly Wrong"
+            })
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['title'], "Tricking Gone Horribly Wrong")
