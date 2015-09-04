@@ -105,6 +105,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+AUTH_USER_MODEL = 'trickers.Tricker'
+
 REST_FRAMEWORK = {
     'PAGINATE_BY': 20,
     'PAGINATE_BY_PARAM': 'page_size',

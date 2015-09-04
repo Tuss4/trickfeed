@@ -16,9 +16,10 @@ YT_URL = "https://www.youtube.com/watch?v={0}"
 
 class Video(models.Model):
 
-    video_type = models.CharField(max_length=2, choices=VIDEO_TYPES, default=YT)
+    video_type = models.CharField(
+        max_length=2, choices=VIDEO_TYPES, default=YT)
     title = models.CharField(max_length=255)
-    video_id = models.CharField(max_length=50)
+    video_id = models.CharField(max_length=50, unique=True, db_index=True)
     thumbnail_url = models.CharField(max_length=255)
     date_added = models.DateField(auto_now_add=True)
 
@@ -26,10 +27,4 @@ class Video(models.Model):
         ordering = ['-date_added']
 
     def __unicode__(self):
-        return self.title, self.video_type
-
-    @property
-    def get_video_url(self):
-        if self.video_type == YT:
-            return YT_URL.format(self.video_id)
-        return ""
+        return "{0} - {1}".format(self.title, self.video_type)

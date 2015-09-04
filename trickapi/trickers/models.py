@@ -6,6 +6,7 @@ from .managers import TrickerManager
 class Tricker(AbstractBaseUser):
     email = models.EmailField(unique=True, db_index=True)
     registration_date = models.DateTimeField(auto_now_add=True)
+    is_admin = models.BooleanField(default=False)
     USERNAME_FIELD = 'email'
 
     objects = TrickerManager()
