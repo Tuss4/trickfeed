@@ -126,3 +126,20 @@ class VideoTests(APITestCase):
             })
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['title'], "Tricking Gone Horribly Wrong")
+
+    def test_delete_unauthorized(self):
+        response = self.client.delete(
+            self.get_detail_url(self.video_detail, self.existing_video.pk))
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_delete_forbidden(self):
+        self.client.credentials(HTTP_AUTHORIZATION="Token " + self.reg.auth_token.key)
+        response = self.client.delete(
+            self.get_detail_url(self.video_detail, self.existing_video.pk))
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_delete_success(self):
+        self.client.credentials(HTTP_AUTHORIZATION="Token " + self.admin.auth_token.key)
+        response = self.client.delete(
+            self.get_detail_url(self.video_detail, self.existing_video.pk))
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
