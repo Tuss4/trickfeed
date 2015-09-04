@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Video, YT, VIDEO_TYPES, YT_URL
+from .models import Video, YT, VIDEO_TYPES
 
 
 class VideoSerializer(serializers.ModelSerializer):
@@ -10,10 +10,7 @@ class VideoSerializer(serializers.ModelSerializer):
         model = Video
 
     def get_video_url(self, obj):
-        if obj.video_type == YT:
-            return YT_URL.format(obj.video_id)
-        return ""
-
+        return obj.get_video_url
 
 
 class CreateVideoSerializer(serializers.Serializer):

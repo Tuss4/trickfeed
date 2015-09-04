@@ -19,7 +19,15 @@ class ListVideos(generics.ListCreateAPIView):
         if not serializer.is_valid():
             return Response(status=status.HTTP_400_BAD_REQUEST)
         try:
-            Video.objects.create(**serializer.data)
-            return Response(status=status.HTTP_201_CREATED)
+            v = Video.objects.create(**serializer.data)
+            return Response(VideoSerializer(v).data, status=status.HTTP_201_CREATED)
         except IntegrityError:
             return Response(status=status.HTTP_409_CONFLICT)
+
+
+class VideoDetail(generics.RetrieveUpdateDestroyAPIView):
+
+    queryset = Video.objects.all()
+    serializer_class = VideoSerializer
+    permission_classes = (VideoViewPermissions, )
+    lookup_url_kwarg = 'video_pk'

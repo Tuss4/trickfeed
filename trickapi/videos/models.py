@@ -28,3 +28,9 @@ class Video(models.Model):
 
     def __unicode__(self):
         return "{0} - {1}".format(self.title, self.video_type)
+
+    @property
+    def get_video_url(self):
+        if self.video_type == YT:
+            return YT_URL.format(self.video_id)
+        return ""
