@@ -4,6 +4,7 @@ Markdown==2.6.2
 PyYAML==3.11
 argparse==1.2.1
 dj-database-url==0.3.0
+django-cors-headers==1.1.0
 django-filter==0.10.0
 djangorestframework==3.2.0
 docker-compose==1.4.0
