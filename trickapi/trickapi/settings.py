@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'corsheaders',
     'videos',
     'trickers',
+    'eswrapper',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -120,4 +121,10 @@ REST_FRAMEWORK = {
     )
 }
 
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = (
+    'localhost:8000',
+)
+
+CORS_ORIGIN_REGEX_WHITELIST = (
+    '^(https?://)?(\w+\.)?ngrok\.io$',
+)
