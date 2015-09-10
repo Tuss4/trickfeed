@@ -3,7 +3,7 @@ from django.core.management.base import AppCommand
 
 class Command(AppCommand):
 
-    help = "A prototype command to generate an elasticsearch map"
+    help = "A prototype command to generate an elasticsearch map for a django model"
 
     # def handle(self, *args, **options):
     #     self.stdout.write("Bruh")
