@@ -128,3 +128,6 @@ CORS_ORIGIN_WHITELIST = (
 CORS_ORIGIN_REGEX_WHITELIST = (
     '^(https?://)?(\w+\.)?ngrok\.io$',
 )
+
+# ES SETTINGS
+ES_URL = os.getenv('ES_URL', 'http://{}'.format(os.getenv('ES_1_PORT_9200_TCP_ADDR')))

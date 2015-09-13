@@ -14,8 +14,9 @@ class Command(AppCommand):
             help="Specify a particular model from the app.")
 
     def handle_app_config(self, app_config, **options):
-        print app_config.name
-        print[m for m in app_config.get_models()]
         model_name = options.get('model_name')
         if model_name:
-            print app_config.get_model(model_name)
+            model = app_config.get_model(model_name)
+            for attr in dir(model):
+                if hasattr(model, attr):
+                    print attr, type(getattr(model, attr))
