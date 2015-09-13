@@ -1,4 +1,5 @@
 from django.db import models
+from eswrapper.mixins import ESWrapperMixin
 
 
 YT = "YT"
@@ -11,10 +12,10 @@ VIDEO_TYPES = (
     (VN, "Vine"),
 )
 
-YT_URL = "https://www.youtube.com/watch?v={0}"
+YT_URL = "https://www.youtube.com/watch?v={}"
 
 
-class Video(models.Model):
+class Video(ESWrapperMixin, models.Model):
 
     video_type = models.CharField(
         max_length=2, choices=VIDEO_TYPES, default=YT)

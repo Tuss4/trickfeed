@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import sys
 import dj_database_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,6 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'd5y(g2b5#j%=z!84km9-i*j_-q6=l#=29m3hab+k#^qt32yq3#'
 
+TESTING = sys.argv[1:2] == ['test']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -131,3 +133,5 @@ CORS_ORIGIN_REGEX_WHITELIST = (
 
 # ES SETTINGS
 ES_URL = os.getenv('ES_URL', 'http://{}'.format(os.getenv('ES_1_PORT_9200_TCP_ADDR')))
+
+ES_INDEX_PREFIX = 'trickapi_'
