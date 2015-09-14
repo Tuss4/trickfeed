@@ -29,4 +29,4 @@ class ESTestMixin(object):
     def destroy(self):
         indices = ES.indices.get(index=['*'])
         test_indices = [name for name in indices.keys() if name.startswith('test_')]
-        ES.destroy(index=test_indices)
+        ES.indices.destroy(index=test_indices)
