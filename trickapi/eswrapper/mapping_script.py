@@ -50,7 +50,7 @@ def create_mapping(app_config, model):
 
 def create_index(app_config, model):
     m = app_config.get_model(model)
-    module_name = '{0}.es_mappings'.format(app_config.name)
+    module_name = '{}.es_mappings'.format(app_config.name)
     try:
         module = import_module(module_name)
         mappings = getattr(module, get_mapping_name(m))
