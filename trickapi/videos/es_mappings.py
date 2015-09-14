@@ -1,0 +1,1 @@
+VIDEO_MAPPING = {'mappings': {'video_document': {'properties': {'video_id': {'type': 'string'}, 'thumbnail_url': {'type': 'string'}, u'id': {'type': 'long'}, 'video_type': {'type': 'string'}, 'title': {'type': 'string'}}}}}

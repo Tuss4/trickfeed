@@ -17,6 +17,11 @@ class ESWrapperMixin(object):
         '''Get the elasticsearch index name.'''
         return "{0}{1}_index".format(get_prefix(), cls.__name__.lower())
 
+    @classmethod
+    def get_document_type(cls):
+        '''Get the elasticsearch document_type.'''
+        return "{}_document".format(cls.__name__.lower())
+
 
 class ESTestMixin(object):
 
