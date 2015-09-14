@@ -1,4 +1,5 @@
 from django.conf import settings
+from .mapping_script import ES
 
 
 def get_prefix():
@@ -25,4 +26,7 @@ class ESWrapperMixin(object):
 
 class ESTestMixin(object):
 
-    pass
+    def destroy(self):
+        indices = ES.indices.get(index=['*'])
+        test_indices = [name for name in indices.keys() if name.startswith('test_')]
+        ES.destroy(index=test_indices)
