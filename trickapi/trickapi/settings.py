@@ -132,6 +132,6 @@ CORS_ORIGIN_REGEX_WHITELIST = (
 )
 
 # ES SETTINGS
-ES_URL = os.getenv('ES_URL', 'http://{}'.format(os.getenv('ES_1_PORT_9200_TCP_ADDR')))
+ES_URL = os.getenv('ES_URL', '{}'.format(os.getenv('ES_1_PORT_9200_TCP_ADDR')))
 
 ES_INDEX_PREFIX = 'trickapi_'
