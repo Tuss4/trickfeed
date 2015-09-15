@@ -1,5 +1,6 @@
 from django.conf import settings
 from .mapping_script import ES
+from copy import deepcopy
 
 
 def get_prefix():
@@ -22,6 +23,15 @@ class ESWrapperMixin(object):
     def get_document_type(cls):
         '''Get the elasticsearch document_type.'''
         return "{}_document".format(cls.__name__.lower())
+
+    def get_document_body(self):
+        '''
+        Get the python dict that will represent the document body.
+        By default will return a dictionary very similar to the value of `self.__dict__`.
+        '''
+        doc_dict = deepcopy(self.__dict__)
+        doc_dict.pop('_state')
+        return doc_dict
 
 
 class ESTestMixin(object):
