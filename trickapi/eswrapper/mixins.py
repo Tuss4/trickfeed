@@ -1,6 +1,9 @@
 from django.conf import settings
-from .mapping_script import ES
+from .mapping_script import ES, DATEFIELD
 from copy import deepcopy
+
+
+DATE_FORMAT = "%Y-%m-%d"  # Based on RFC 3339
 
 
 def get_prefix():
@@ -31,6 +34,10 @@ class ESWrapperMixin(object):
         '''
         doc_dict = deepcopy(self.__dict__)
         doc_dict.pop('_state')
+        for k in doc_dict.keys():
+            f = self._meta.get_field(k)
+            if f.get_internal_type() == DATEFIELD:
+                doc_dict[k] = doc_dict[k].strftime(DATE_FORMAT)
         return doc_dict
 
 

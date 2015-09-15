@@ -9,6 +9,7 @@ ES = Elasticsearch([dict(host=settings.ES_URL)])
 CHARFIELD = 'CharField'
 AUTOFIELD = 'AutoField'
 DATEFIELD = 'DateField'
+DATETIMEFIELD = 'DateTimeField'
 
 
 def update_properties_dict(props, k, field_type):
@@ -64,3 +65,28 @@ def create_index(app_config, model):
 
 def index_exists(index_name):
     return ES.indices.exists(index=index_name)
+
+
+# TODO: all these funcs
+def get_index():
+    pass
+
+
+def update_index():
+    pass
+
+
+def create_document():
+    pass
+
+
+def get_document():
+    pass
+
+
+def update_document():
+    pass
+
+
+def delete_document():
+    pass

@@ -35,3 +35,9 @@ class Video(ESWrapperMixin, models.Model):
         if self.video_type == YT:
             return YT_URL.format(self.video_id)
         return ""
+
+    # Overriding get_document_body to add a custom key/val for get_video_url
+    def get_document_body(self):
+        doc_dict = super(Video, self).get_document_body()
+        doc_dict['video_url'] = self.get_video_url
+        return doc_dict
