@@ -54,7 +54,6 @@ def create_index(app_config, model):
     try:
         module = import_module(module_name)
         mappings = getattr(module, get_mapping_name(m))
-        print mappings
         if not index_exists([m.get_index_name()]):
             ES.indices.create(index=m.get_index_name(), body=mappings)
         else:
