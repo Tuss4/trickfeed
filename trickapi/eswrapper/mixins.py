@@ -29,6 +29,7 @@ class ESTestMixin(object):
     '''Make sure any test indexes get removed from the elasticsearch node'''
 
     def tearDown(self):
+        print"ES_URL:",  settings.ES_URL
         indices = ES.indices.get(index=['*'])
         test_indices = [name for name in indices.keys() if name.startswith('test_')]
         if test_indices:
