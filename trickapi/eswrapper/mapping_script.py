@@ -66,12 +66,12 @@ def create_index(app_config, model):
 
 
 def index_exists(index_name):
+    """
+    Returns a boolean, based on the index's existence.
+    """
     return ES.indices.exists(index=index_name)
 
 
-# TODO: all these funcs
-# Investigate what it would take to update mapping
-# Build logic around that
 def get_index(index_name):
     """Returns the index in a python dict."""
     try:
@@ -121,9 +121,22 @@ def get_document(obj):
         raise DocumentNotFound(obj.get_index_name(), obj.pk)
 
 
-def update_document():
-    pass
+def update_document(obj):
+    """
+    Updates the document from the index.
+    This should be called via a signal whenever the obj gets saved.
+    """
+    index = obj.get_index_name()
+    doc_type = obj.get_document_type()
+    body = dict(doc=obj.get_document_body())
+    ES.update(index=index, doc_type=doc_type, body=body, id=obj.pk)
 
 
-def delete_document():
-    pass
+def delete_document(obj):
+    """
+    Delete a document from the index.
+    This should be called via a signal when the obj gets deleted.
+    """
+    index = obj.get_index_name()
+    doc_type = obj.get_document_type()
+    ES.delete(index=index, doc_type=doc_type, id=obj.pk)
