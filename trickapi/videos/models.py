@@ -28,7 +28,7 @@ class Video(ESWrapperMixin, models.Model):
         ordering = ['-date_added']
 
     def __unicode__(self):
-        return "{0} - {1}".format(self.title, self.video_type)
+        return "{0} - {1}".format(self.video_id, self.video_type)
 
     @property
     def get_video_url(self):
