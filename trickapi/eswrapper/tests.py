@@ -2,7 +2,8 @@ from django.apps import apps
 from django.test import TestCase
 
 from .mixins import get_prefix, ESTestMixin
-from .mapping_script import create_index, ES
+from .mapping_script import (
+    create_index, ES, get_mapping_name, index_exists)
 from videos.models import Video
 
 
@@ -20,3 +21,10 @@ class ESWrapperTests(ESTestMixin, TestCase):
         app_config = apps.get_app_config('videos')
         create_index(app_config, 'Video')
         self.assertTrue(ES.indices.exists(index=[Video.get_index_name()]))
+
+    def test_get_mapping_name(self):
+        mapping_name = get_mapping_name(Video)
+        self.assertEqual(mapping_name, "VIDEO_MAPPING")
+
+    def test_index_exists(self):
+        pass
