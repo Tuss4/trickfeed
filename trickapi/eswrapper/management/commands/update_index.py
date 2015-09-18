@@ -1,5 +1,5 @@
 from django.core.management.base import AppCommand
-from eswrapper.mapping_script import delete_index, create_index, create_document
+from eswrapper.script import delete_index, create_index, create_document
 from eswrapper.exceptions import IndexNotFound
 
 import time

@@ -1,5 +1,5 @@
 from django.conf import settings
-from .mapping_script import ES, DATEFIELD
+from .script import ES, DATEFIELD
 from copy import deepcopy
 
 

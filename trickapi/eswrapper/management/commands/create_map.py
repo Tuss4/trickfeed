@@ -1,5 +1,5 @@
 from django.core.management.base import AppCommand
-from eswrapper.mapping_script import create_mapping
+from eswrapper.script import create_mapping
 
 
 class Command(AppCommand):

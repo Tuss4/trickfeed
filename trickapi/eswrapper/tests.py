@@ -4,7 +4,7 @@ from django.test import TestCase
 import time
 
 from .mixins import get_prefix, ESTestMixin
-from .mapping_script import (
+from .script import (
     create_index, ES, get_mapping_name, index_exists, get_index, delete_index,
     create_document, get_document, update_document, delete_document)
 from .exceptions import IndexNotFound, DocumentNotFound
