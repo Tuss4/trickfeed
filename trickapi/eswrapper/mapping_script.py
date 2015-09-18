@@ -129,7 +129,10 @@ def update_document(obj):
     index = obj.get_index_name()
     doc_type = obj.get_document_type()
     body = dict(doc=obj.get_document_body())
-    ES.update(index=index, doc_type=doc_type, body=body, id=obj.pk)
+    try:
+        ES.update(index=index, doc_type=doc_type, body=body, id=obj.pk)
+    except NotFoundError:
+        raise DocumentNotFound(obj.get_index_name(), obj.pk)
 
 
 def delete_document(obj):
@@ -139,4 +142,7 @@ def delete_document(obj):
     """
     index = obj.get_index_name()
     doc_type = obj.get_document_type()
-    ES.delete(index=index, doc_type=doc_type, id=obj.pk)
+    try:
+        ES.delete(index=index, doc_type=doc_type, id=obj.pk)
+    except NotFoundError:
+        raise DocumentNotFound(obj.get_index_name(), obj.pk)
