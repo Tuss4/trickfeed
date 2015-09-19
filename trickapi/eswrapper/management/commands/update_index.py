@@ -37,7 +37,7 @@ class Command(AppCommand):
                     create_index(app_config, m_name)
                     self.stdout.write("Done.")
                     self.stdout.write("Re-creating documents.")
-                    time.sleep(3)  # To avoid overloading the node.
+                    time.sleep(1)  # To avoid overloading the node.
                     for obj in m.objects.all():
                         err = create_document(obj)
                         if not err:
