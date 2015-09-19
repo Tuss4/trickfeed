@@ -14,7 +14,7 @@ api:
     ports:
         - "5000:8000"
     volumes:
-        - .:/code
+        - .:/code:rw
     links:
         - db
         - es
