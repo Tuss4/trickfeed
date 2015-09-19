@@ -45,8 +45,8 @@ def create_mapping(app_config, model):
         update_properties_dict(props, field.name, field.get_internal_type())
 
     path = app_config.path + '/es_mappings.py'
-    f = open(path, 'w')
-    f.write('{0} = {1}'.format(mapping_name, map_dict))
+    f = open(path, 'a')
+    f.write('{0} = {1}\n'.format(mapping_name, map_dict))
     f.close()
 
 
