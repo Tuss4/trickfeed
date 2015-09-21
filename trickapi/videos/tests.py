@@ -4,12 +4,14 @@ from rest_framework.test import APITestCase
 from rest_framework import status
 
 from .models import YT, YT_URL, Video
+from eswrapper.mixins import ESTestMixin
+from eswrapper.script import get_document
 from trickers.models import Tricker
 
 import datetime
 
 
-class VideoTests(APITestCase):
+class VideoTests(ESTestMixin, APITestCase):
 
     admin_data = {
         "email": "trick_beast@admin.com",
@@ -70,6 +72,10 @@ class VideoTests(APITestCase):
         self.assertEqual(response.data['video_type'], YT)
         self.assertEqual(response.data['title'], self.video_data['title'])
         self.assertEqual(response.data['thumbnail_url'], self.video_data['thumbnail_url'])
+        v = Video.objects.get(pk=response.data['id'])
+        doc = get_document(v)
+        self.assertTrue(isinstance(doc, dict))
+        self.assertEqual(doc['_source'], v.get_document_body())
 
     def test_create_video_unauthorized(self):
         response = self.client.post(self.video_url, self.video_data)

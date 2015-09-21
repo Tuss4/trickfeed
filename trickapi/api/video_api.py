@@ -7,6 +7,8 @@ from videos.models import Video
 from videos.permissions import VideoViewPermissions
 from videos.serializers import VideoSerializer, CreateVideoSerializer
 
+from eswrapper.script import create_document
+
 
 class ListVideos(generics.ListCreateAPIView):
 
@@ -20,6 +22,7 @@ class ListVideos(generics.ListCreateAPIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
         try:
             v = Video.objects.create(**serializer.data)
+            create_document(v)
             return Response(VideoSerializer(v).data, status=status.HTTP_201_CREATED)
         except IntegrityError:
             return Response(status=status.HTTP_409_CONFLICT)

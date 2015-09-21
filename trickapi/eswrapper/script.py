@@ -28,6 +28,7 @@ def get_mapping_name(model):
 
 
 def create_mapping(app_config, model):
+    # TODO: Check to see if variable is already in module
     m = app_config.get_model(model)
     fields = m._meta.get_fields()
     mapping_name = '{}_MAPPING'.format(m.__name__.upper())
