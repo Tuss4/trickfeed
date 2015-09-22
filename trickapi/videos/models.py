@@ -1,5 +1,6 @@
 from django.db import models
-from eswrapper.mixins import ESWrapperMixin, ESManager
+from eswrapper.mixins import ESWrapperMixin
+from eswrapper.managers import ESManager
 from .managers import ESVideoManager
 
 
