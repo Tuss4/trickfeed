@@ -1,4 +1,4 @@
-from eswrapper.mixins import ESManager
+from eswrapper.managers import ESManager
 from django.apps import apps
 
 
