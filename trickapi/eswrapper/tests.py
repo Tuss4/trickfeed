@@ -113,31 +113,13 @@ class ESWrapperTests(ESTestMixin, TestCase):
             title="Test Video",
             video_id="Leg1tVid1D",
             thumbnail_url="http://example.com/legitthumbnail.jpeg")
-        err = create_document(v)
-        self.assertIsNone(err)
         doc = get_document(v)
         self.assertTrue(isinstance(doc, dict))
 
         v.title = "Legit Video, Bruh"
         v.save()
-        update_document(v)
         doc = get_document(v)
         self.assertEqual(doc['_source']['title'], "Legit Video, Bruh")
-
-    def test_update_document_not_found(self):
-        app_config = apps.get_app_config('videos')
-        create_index(app_config, 'Video')
-        self.assertTrue(index_exists(Video.get_index_name()))
-        time.sleep(1)
-        v = Video.objects.create(
-            title="Test Video",
-            video_id="Leg1tVid1D",
-            thumbnail_url="http://example.com/legitthumbnail.jpeg")
-
-        v.title = "Legit Video, Bruh"
-        v.save()
-        with self.assertRaises(DocumentNotFound):
-            update_document(v)
 
     def test_delete_document(self):
         app_config = apps.get_app_config('videos')
