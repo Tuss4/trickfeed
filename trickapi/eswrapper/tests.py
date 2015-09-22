@@ -59,8 +59,9 @@ class ESWrapperTests(ESTestMixin, TestCase):
             title="Test Video",
             video_id="Leg1tVid1D",
             thumbnail_url="http://example.com/legitthumbnail.jpeg")
-        err = create_document(v)
-        self.assertIsNone(err)
+        # Created Via signal assert the document exists
+        doc = get_document(v)
+        self.assertEqual(doc['_source'], v.get_document_body())
 
     def test_create_document_conflict(self):
         app_config = apps.get_app_config('videos')
@@ -71,8 +72,6 @@ class ESWrapperTests(ESTestMixin, TestCase):
             title="Test Video",
             video_id="Leg1tVid1D",
             thumbnail_url="http://example.com/legitthumbnail.jpeg")
-        err = create_document(v)
-        self.assertIsNone(err)
         err = create_document(v)
         err_msg = "Conflict: document already exists for {0} with id {1}."
         self.assertEqual(
@@ -87,22 +86,8 @@ class ESWrapperTests(ESTestMixin, TestCase):
             title="Test Video",
             video_id="Leg1tVid1D",
             thumbnail_url="http://example.com/legitthumbnail.jpeg")
-        err = create_document(v)
-        self.assertIsNone(err)
         doc = get_document(v)
         self.assertTrue(isinstance(doc, dict))
-
-    def test_get_document_not_found(self):
-        app_config = apps.get_app_config('videos')
-        create_index(app_config, 'Video')
-        self.assertTrue(index_exists(Video.get_index_name()))
-        time.sleep(1)
-        v = Video.objects.create(
-            title="Test Video",
-            video_id="Leg1tVid1D",
-            thumbnail_url="http://example.com/legitthumbnail.jpeg")
-        with self.assertRaises(DocumentNotFound):
-            get_document(v)
 
     def test_update_document(self):
         app_config = apps.get_app_config('videos')
@@ -130,23 +115,8 @@ class ESWrapperTests(ESTestMixin, TestCase):
             title="Test Video",
             video_id="Leg1tVid1D",
             thumbnail_url="http://example.com/legitthumbnail.jpeg")
-        err = create_document(v)
-        self.assertIsNone(err)
         doc = get_document(v)
         self.assertTrue(isinstance(doc, dict))
         delete_document(v)
         with self.assertRaises(DocumentNotFound):
             get_document(v)
-
-    def test_delete_document_not_found(self):
-        app_config = apps.get_app_config('videos')
-        create_index(app_config, 'Video')
-        self.assertTrue(index_exists(Video.get_index_name()))
-        time.sleep(1)
-        v = Video.objects.create(
-            title="Test Video",
-            video_id="Leg1tVid1D",
-            thumbnail_url="http://example.com/legitthumbnail.jpeg")
-
-        with self.assertRaises(DocumentNotFound):
-            delete_document(v)

@@ -20,7 +20,7 @@ def update_properties_dict(props, k, field_type):
         if field_type == CHARFIELD:
             props[k] = {"type": "string"}
         if field_type == DATEFIELD:
-            props[k] = {"type": "string"}
+            props[k] = {"type": "date"}
 
 
 def get_mapping_name(model):

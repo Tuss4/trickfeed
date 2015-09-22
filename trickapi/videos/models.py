@@ -1,5 +1,6 @@
 from django.db import models
-from eswrapper.mixins import ESWrapperMixin
+from eswrapper.mixins import ESWrapperMixin, ESManager
+from .managers import ESVideoManager
 
 
 YT = "YT"
@@ -23,6 +24,8 @@ class Video(ESWrapperMixin, models.Model):
     video_id = models.CharField(max_length=50, unique=True, db_index=True)
     thumbnail_url = models.CharField(max_length=255)
     date_added = models.DateField(auto_now_add=True)
+
+    es_objects = ESVideoManager()
 
     class Meta:
         ordering = ['-date_added']
