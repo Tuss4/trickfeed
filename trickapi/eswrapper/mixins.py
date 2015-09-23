@@ -50,3 +50,9 @@ class ESTestMixin(object):
         test_indices = [name for name in indices.keys() if name.startswith('test_')]
         if test_indices:
             ES.indices.delete(index=test_indices)
+
+
+# DRF View Helpers
+class ESPaginationMixin(object):
+
+    pass
