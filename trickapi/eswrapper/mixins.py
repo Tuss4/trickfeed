@@ -55,4 +55,17 @@ class ESTestMixin(object):
 # DRF View Helpers
 class ESPaginationMixin(object):
 
-    pass
+    def get_count(self, es_qs):
+        return es_qs['hits']['total']
+
+    def esresp(self, count, results, page_urls=[None, None]):
+        response = {
+            "count": count,
+            "next": page_urls[1],
+            "previous": page_urls[0],
+            "results": results
+        }
+        return response
+
+    def build_urls(self):
+        pass

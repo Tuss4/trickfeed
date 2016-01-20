@@ -1,13 +1,13 @@
 from django.db import IntegrityError
 
-from rest_framework import generics, status
+from rest_framework import generics, status, views
 from rest_framework.response import Response
 
 from videos.models import Video
 from videos.permissions import VideoViewPermissions
 from videos.serializers import VideoSerializer, CreateVideoSerializer
 
-from eswrapper.script import create_document
+from eswrapper.mixins import ESPaginationMixin
 
 
 class ListVideos(generics.ListCreateAPIView):
@@ -33,3 +33,11 @@ class VideoDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = VideoSerializer
     permission_classes = (VideoViewPermissions, )
     lookup_url_kwarg = 'video_pk'
+
+
+class ESVideoList(ESPaginationMixin, views.APIView):
+
+    def get(self, request, *args, **kwargs):
+        qs = Video.es_objects.all()
+        resp = self.esresp(Video.objects.count(), qs)
+        return Response(resp, status=status.HTTP_200_OK)
