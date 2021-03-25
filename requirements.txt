@@ -1,7 +1,7 @@
 Django==1.8.3
 Fabric==1.10.2
 Markdown==2.6.2
-PyYAML==3.11
+PyYAML==5.4
 argparse==1.2.1
 dj-database-url==0.3.0
 django-cors-headers==1.1.0
