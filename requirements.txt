@@ -19,6 +19,6 @@ pycrypto==2.6.1
 requests==2.6.2
 six==1.9.0
 texttable==0.8.3
-urllib3==1.11
+urllib3==1.26.5
 websocket-client==0.32.0
 wsgiref==0.1.2
